@@ -72,6 +72,25 @@ HRESULT SetDefaultUser(std::wstring_view userName)
     return hr;
 }
 
+void SetWindow(int Width, int Height)
+{
+    _COORD coord;
+    coord.X = Width;
+    coord.Y = Height;
+
+    _SMALL_RECT Rect;
+    Rect.Top = 0;
+    Rect.Left = 0;
+    Rect.Bottom = Height - 1;
+    Rect.Right = Width - 1;
+
+    HANDLE Handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    // Set Buffer Size 
+    SetConsoleScreenBufferSize(Handle, coord);
+    // Set Window Size
+    SetConsoleWindowInfo(Handle, TRUE, &Rect);
+}
+
 int wmain(int argc, wchar_t const *argv[])
 {
     // Update the title bar of the console window.
@@ -86,6 +105,7 @@ int wmain(int argc, wchar_t const *argv[])
     GetCurrentConsoleFontEx(hConsole, 0, FontStructure);
     wcscpy_s(FontStructure->FaceName, L"MesloLGS NF");
     SetCurrentConsoleFontEx(hConsole, 0, FontStructure);
+    SetWindow(88, 22);
 
     // Initialize a vector of arguments.
     std::vector<std::wstring_view> arguments;
