@@ -102,9 +102,8 @@ int wmain(int argc, wchar_t const *argv[])
     FontStructure->cbSize = sizeof(CONSOLE_FONT_INFOEX);
     FontStructure->dwFontSize.X = 8;
     FontStructure->dwFontSize.Y = 16;
-    GetCurrentConsoleFontEx(hConsole, 0, FontStructure);
     wcscpy_s(FontStructure->FaceName, L"MesloLGS NF");
-    SetCurrentConsoleFontEx(hConsole, 0, FontStructure);
+    SetCurrentConsoleFontEx(hConsole, true, FontStructure);
     SetWindow(88, 22);
 
     // Initialize a vector of arguments.
