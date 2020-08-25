@@ -77,6 +77,16 @@ int wmain(int argc, wchar_t const *argv[])
     // Update the title bar of the console window.
     SetConsoleTitleW(DistributionInfo::WindowTitle.c_str());
 
+    // Change font of the console
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    PCONSOLE_FONT_INFOEX FontStructure = new CONSOLE_FONT_INFOEX() ;
+    FontStructure->cbSize = sizeof(CONSOLE_FONT_INFOEX);
+    FontStructure->dwFontSize.X = 8;
+    FontStructure->dwFontSize.Y = 16;
+    GetCurrentConsoleFontEx(hConsole, 0, FontStructure);
+    wcscpy_s(FontStructure->FaceName, L"MesloLGS NF");
+    SetCurrentConsoleFontEx(hConsole, 0, FontStructure);
+
     // Initialize a vector of arguments.
     std::vector<std::wstring_view> arguments;
     for (int index = 1; index < argc; index += 1) {
